@@ -1,0 +1,7 @@
+C:\Users\JinWang\Documents\Visual Studio 2017\projects\MaxMinSalesTabular\MaxMinSalesTabular\bin\Model.asdatabase
+C:\Users\JinWang\Documents\Visual Studio 2017\projects\MaxMinSalesTabular\MaxMinSalesTabular\bin\Model.deploymenttargets
+C:\Users\JinWang\Documents\Visual Studio 2017\projects\MaxMinSalesTabular\MaxMinSalesTabular\bin\Model.deploymentoptions
+C:\Users\JinWang\Documents\Visual Studio 2017\projects\MaxMinSalesTabular\MaxMinSalesTabular\obj\Development\MaxMinSalesTabular.smproj.CoreCompileInputs.cache
+C:\Users\JinWang\Documents\Visual Studio 2017\projects\MaxMinSalesTabular\MaxMinSalesTabular\obj\Development\Model.asdatabase
+C:\Users\JinWang\Documents\Visual Studio 2017\projects\MaxMinSalesTabular\MaxMinSalesTabular\obj\Development\Model.deploymentoptions
+C:\Users\JinWang\Documents\Visual Studio 2017\projects\MaxMinSalesTabular\MaxMinSalesTabular\obj\Development\Model.deploymenttargets
