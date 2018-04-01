@@ -1,0 +1,712 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "name": "JWANG23SQL2016SSDB ",
+        "connectionString": "Provider=SQLNCLI11;Data Source=JWANG23\\SQL2016SSDB;Initial Catalog=OrderProcessingSystem;Integrated Security=SSPI;Persist Security Info=false",
+        "impersonationMode": "impersonateAccount",
+        "account": "jinwang",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "Customers",
+        "columns": [
+          {
+            "name": "Account Number",
+            "dataType": "int64",
+            "sourceColumn": "AccountNumber",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "First Name",
+            "dataType": "string",
+            "sourceColumn": "FirstName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "MiddleInitial",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "MiddleInitial",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Last Name",
+            "dataType": "string",
+            "sourceColumn": "LastName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Address",
+            "dataType": "string",
+            "sourceColumn": "Address",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "sourceColumn": "State",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Zip Code",
+            "dataType": "string",
+            "sourceColumn": "ZipCode",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "NumberOfCarsOwned",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "NumberOfCarsOwned",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "HomeOwnerFlag",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "HomeOwnerFlag",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "Married",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Married",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "NumberOfChildren",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "NumberOfChildren",
+            "sourceProviderType": "SmallInt"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Customers",
+            "dataView": "full",
+            "source": {
+              "query": " SELECT [dbo].[Customers].* FROM [dbo].[Customers] ",
+              "dataSource": "JWANG23SQL2016SSDB "
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[Customers].* FROM [dbo].[Customers] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Customers"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "Promotions",
+        "columns": [
+          {
+            "name": "Promotion Code",
+            "dataType": "int64",
+            "sourceColumn": "Code",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Promotion",
+            "dataType": "string",
+            "sourceColumn": "Name",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Promotions",
+            "dataView": "full",
+            "source": {
+              "query": " SELECT [dbo].[Discounts].* FROM [dbo].[Discounts] ",
+              "dataSource": "JWANG23SQL2016SSDB "
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Sales of all Promotions",
+            "expression": "CALCULATE([Sales in Dollars],ALL(Promotions[Promotion]))",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Percentage of all Promotion Sales",
+            "expression": "DIVIDE([Sales in Dollars],[Total Sales of all Promotions],0)",
+            "formatString": "0.000%;-0.000%;0.000%"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[Discounts].* FROM [dbo].[Discounts] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Discounts"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "Products",
+        "columns": [
+          {
+            "name": "Product Code",
+            "dataType": "int64",
+            "sourceColumn": "Code",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Product",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "TypeCode",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "TypeCode",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Product Type",
+            "dataType": "string",
+            "sourceColumn": "TypeDescription",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Retail Price",
+            "dataType": "decimal",
+            "sourceColumn": "RetailPrice",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "sourceProviderType": "Currency",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Weight",
+            "dataType": "double",
+            "sourceColumn": "Weight",
+            "sourceProviderType": "Double"
+          },
+          {
+            "type": "calculated",
+            "name": "Retail Price per Ounce",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "[Retail Price]/[Weight]",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Products",
+            "dataView": "full",
+            "source": {
+              "query": " SELECT [dbo].[Products].* FROM [dbo].[Products] ",
+              "dataSource": "JWANG23SQL2016SSDB "
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Sales of all Products",
+            "expression": "CALCULATE([Sales in Dollars],ALL(Products[Product]))",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Percentage of all Products Sales",
+            "expression": "DIVIDE([Sales in Dollars],[Total Sales of all Products],0)",
+            "formatString": "0.000%;-0.000%;0.000%"
+          },
+          {
+            "name": "Total Units of all Products",
+            "expression": "CALCULATE([Sales in Units],ALL(Products[Product]))"
+          },
+          {
+            "name": "Percentage of all Products Units",
+            "expression": "DIVIDE([Sales in Units],[Total Units of all Products],0)",
+            "formatString": "0.000%;-0.000%;0.000%"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[Products].* FROM [dbo].[Products] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Products"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "Stores",
+        "columns": [
+          {
+            "name": "Store Code",
+            "dataType": "int64",
+            "sourceColumn": "Code",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Store",
+            "dataType": "string",
+            "sourceColumn": "Name",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Store Type",
+            "dataType": "string",
+            "sourceColumn": "StoreType",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Stores",
+            "dataView": "full",
+            "source": {
+              "query": " SELECT [dbo].[SalesLocations].* FROM [dbo].[SalesLocations] ",
+              "dataSource": "JWANG23SQL2016SSDB "
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Sales of all Stores",
+            "expression": "CALCULATE([Sales in Dollars],ALL(Stores[Store]))",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Percentage of all Store Sales",
+            "expression": "DIVIDE([Sales in Dollars],[Total Sales of all Stores],0)",
+            "formatString": "0.000%;-0.000%;0.000%"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[SalesLocations].* FROM [dbo].[SalesLocations] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "SalesLocations"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "Orders",
+        "columns": [
+          {
+            "name": "OrderID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "OrderID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "OrderDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "OrderDate",
+            "formatString": "General Date",
+            "sourceProviderType": "Date"
+          },
+          {
+            "name": "CustomerAccount",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CustomerAccount",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Product",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "Product",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Store",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "Store",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Promotion",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "Promotion",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "SalesPerson",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesPerson",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "StoreSales",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "StoreSales",
+            "sourceProviderType": "Decimal"
+          },
+          {
+            "name": "UnitSales",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "UnitSales",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Sales Person",
+            "dataType": "string",
+            "sourceColumn": "SalesPersonName",
+            "sourceProviderType": "VarChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Orders",
+            "dataView": "full",
+            "source": {
+              "query": [
+                "select O.*, ISNULL(S1.Name, S2.Name) as SalesPersonName",
+                "from Orders as O left join SalesStaffJanuary2013 as S1 on o.SalesPerson=s1.SalesTerritory",
+                "and o.OrderDate < '7/1/2014'",
+                "left join SalesStaffJuly2014 as S2 on o.SalesPerson=s2.SalesTerritory and o.OrderDate >= '7/1/2014'"
+              ],
+              "dataSource": "JWANG23SQL2016SSDB "
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select O.*, ISNULL(S1.Name, S2.Name) as SalesPersonName",
+                  "from Orders as O left join SalesStaffJanuary2013 as S1 on o.SalesPerson=s1.SalesTerritory",
+                  "and o.OrderDate < '7/1/2014'",
+                  "left join SalesStaffJuly2014 as S2 on o.SalesPerson=s2.SalesTerritory and o.OrderDate >= '7/1/2014'</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "Sales in Dollars",
+            "expression": "SUM([StoreSales])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Sales in Units",
+            "expression": "SUM([UnitSales])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Sales per Unit",
+            "expression": "DIVIDE([Sales in Dollars],[Sales in Units],0)",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Total Sales YTD",
+            "expression": "TOTALYTD([Sales in Dollars],'Time'[Date])",
+            "formatString": "\\$#,0.00;-\\$#,0.00;\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": [
+              "select O.*, ISNULL(S1.Name, S2.Name) as SalesPersonName",
+              "from Orders as O left join SalesStaffJanuary2013 as S1 on o.SalesPerson=s1.SalesTerritory",
+              "and o.OrderDate < '7/1/2014'",
+              "left join SalesStaffJuly2014 as S2 on o.SalesPerson=s2.SalesTerritory and o.OrderDate >= '7/1/2014'"
+            ]
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Orders"
+          },
+          {
+            "name": "QueryEditorSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>select O.*, ISNULL(S1.Name, S2.Name) as SalesPersonName",
+              "from Orders as O left join SalesStaffJanuary2013 as S1 on o.SalesPerson=s1.SalesTerritory",
+              "and o.OrderDate < '7/1/2014'",
+              "left join SalesStaffJuly2014 as S2 on o.SalesPerson=s2.SalesTerritory and o.OrderDate >= '7/1/2014'</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Time",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Date",
+            "dataType": "dateTime",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "isKey": true,
+            "sourceColumn": "[Date]"
+          },
+          {
+            "type": "calculated",
+            "name": "Year",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "YEAR([Date])"
+          },
+          {
+            "type": "calculated",
+            "name": "Quarter",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "YEAR([Date])&\"-\"&SWITCH(MONTH([Date]),1,\"Q1\",2,\"Q1\",3,\"Q1\",4,\"Q2\",5,\"Q2\",6,\"Q2\",7,\"Q3\",8,\"Q3\",9,\"Q3\",10,\"Q4\",11,\"Q4\",12,\"Q4\")"
+          },
+          {
+            "type": "calculated",
+            "name": "Month",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "FORMAT([Date],\"MMMM,YYYY\")",
+            "sortByColumn": "Month Sort"
+          },
+          {
+            "type": "calculated",
+            "name": "Month Sort",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "FORMAT([Date],\"YYYYMM\")"
+          },
+          {
+            "type": "calculated",
+            "name": "Day of Year",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DATEDIFF(DATE(YEAR([Date]),1,1),[Date],DAY)+1"
+          },
+          {
+            "type": "calculated",
+            "name": "Day of Quarter",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DATEDIFF(DATE(YEAR([Date]),SWITCH(MONTH([Date]),1,1,2,1,3,1,4,4,5,4,6,4,7,7,8,7,9,7,10,10,11,10,12,10),1),[Date],DAY)+1"
+          },
+          {
+            "type": "calculated",
+            "name": "Day of Month",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DAY([Date])"
+          },
+          {
+            "type": "calculated",
+            "name": "Month of Year",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "FORMAT([Date],\"MMMM\")",
+            "sortByColumn": "Month of Year Sort"
+          },
+          {
+            "type": "calculated",
+            "name": "Month of Year Sort",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "MONTH([Date])"
+          },
+          {
+            "type": "calculated",
+            "name": "Month of Quarter",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "SWITCH(MONTH([Date]),1,1,2,2,3,3,4,1,5,2,6,3,7,1,8,2,9,3,10,1,11,2,12,3)"
+          },
+          {
+            "type": "calculated",
+            "name": "Quarter of Year",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "SWITCH(MONTH([Date]),1,1,2,1,3,1,4,2,5,2,6,2,7,3,8,3,9,3,10,4,11,4,12,4)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "CALENDAR(DATE(2013,1,1), DATE(2015,12,31))"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year"
+              },
+              {
+                "name": "Quarter",
+                "ordinal": 1,
+                "column": "Quarter"
+              },
+              {
+                "name": "Month",
+                "ordinal": 2,
+                "column": "Month"
+              },
+              {
+                "name": "Date",
+                "ordinal": 3,
+                "column": "Date"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "2f0bf9bb-05b9-419a-bb77-6963c45fe7dd",
+        "fromTable": "Orders",
+        "fromColumn": "OrderDate",
+        "toTable": "Time",
+        "toColumn": "Date"
+      },
+      {
+        "name": "ea1b3ee6-2a82-4c4a-a8e8-4432970e1e58",
+        "fromTable": "Orders",
+        "fromColumn": "CustomerAccount",
+        "toTable": "Customers",
+        "toColumn": "Account Number"
+      },
+      {
+        "name": "c50a2179-bc59-4692-8a05-8848aaa3e8fb",
+        "fromTable": "Orders",
+        "fromColumn": "Product",
+        "toTable": "Products",
+        "toColumn": "Product Code"
+      },
+      {
+        "name": "285a1cd4-0ca4-425c-9b32-ee9579f34e4f",
+        "fromTable": "Orders",
+        "fromColumn": "Store",
+        "toTable": "Stores",
+        "toColumn": "Store Code"
+      },
+      {
+        "name": "1d73b584-dcf8-419c-9878-e41a88b4f23a",
+        "fromTable": "Orders",
+        "fromColumn": "Promotion",
+        "toTable": "Promotions",
+        "toColumn": "Promotion Code"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
